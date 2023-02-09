@@ -3,6 +3,7 @@ from tol_lab_share.message_properties.definitions.labware_type import LabwareTyp
 from tol_lab_share.message_properties.definitions.labware import Labware
 from tol_lab_share.message_properties.definitions.input import Input
 from tol_lab_share import error_codes
+from tol_lab_share.schema_versioning import SchemaVersioning, CREATE_LABWARE_SUPPORTING_ACCESSIONING_AND_GENOME
 
 
 def build_sample(sample_data):
@@ -52,3 +53,21 @@ def test_sample_is_invalid(invalid_sample):
     check_presence_error(instance.errors, error_codes.ERROR_2_NOT_STRING, "sanger_sample_id")
     check_presence_error(instance.errors, error_codes.ERROR_9_INVALID_INPUT, "scientific_name")
     assert len(instance.errors) == 12
+
+def test_sample_properties_accession_and_genome_added_if_right_version(valid_sample):
+    instance = build_sample(valid_sample)
+    instance.schema_versioning = CREATE_LABWARE_SUPPORTING_ACCESSIONING_AND_GENOME
+    assert instance.has_property("genome_size")
+    assert instance.has_property("accession_number")
+
+def test_sample_properties_accession_and_genome_not_added_if_wrong_version(valid_sample):
+    instance = build_sample(valid_sample)
+    versioning = SchemaVersioning(
+        CREATE_LABWARE_SUPPORTING_ACCESSIONING_AND_GENOME.schema_name, 
+        int(CREATE_LABWARE_SUPPORTING_ACCESSIONING_AND_GENOME.version) - 1
+    )
+    instance.schema_versioning = versioning
+    assert not instance.has_property("genome_size")
+    assert not instance.has_property("accession_number")
+
+

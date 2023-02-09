@@ -18,7 +18,7 @@ from tol_lab_share.constants import (
     INPUT_CREATE_LABWARE_MESSAGE_SAMPLES,
 )
 from tol_lab_share.messages.output_traction_message import OutputTractionMessageInterface
-
+from functools import cached_property
 import logging
 
 logger = logging.getLogger(__name__)
@@ -27,12 +27,19 @@ logger = logging.getLogger(__name__)
 class Labware(MessageProperty):
     """MessageProperty that handles the parsing of a labware section for the TOL message."""
 
-    def __init__(self, input: MessageProperty):
-        super().__init__(input)
-
-        self.add_property("labware_type", LabwareType(DictInput(input, INPUT_CREATE_LABWARE_MESSAGE_LABWARE_TYPE)))
-        self.add_property("barcode", Barcode(DictInput(input, INPUT_CREATE_LABWARE_MESSAGE_BARCODE)))
-        self.add_property("samples", self._parse_samples(input))
+    @cached_property
+    def property_definitions(self):
+        return {
+            "labware_type": {
+                "property": LabwareType(DictInput(self._input, INPUT_CREATE_LABWARE_MESSAGE_LABWARE_TYPE)),
+            },
+            "barcode": {
+                "property": Barcode(DictInput(self._input, INPUT_CREATE_LABWARE_MESSAGE_BARCODE)),
+            },
+            "samples": {
+                "property": self._parse_samples(self._input),
+            }                
+        }
 
     def _parse_samples(self, input: MessageProperty) -> List[MessagePropertyInterface]:
         """Parses the samples section and creates a sample for each position."""

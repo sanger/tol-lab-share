@@ -8,18 +8,28 @@ from itertools import chain
 from tol_lab_share import error_codes
 import datetime
 from tol_lab_share.message_properties.interfaces import MessagePropertyInterface
+from tol_lab_share.schema_versioning import SchemaVersioning
 
 logger = logging.getLogger(__name__)
 
 PROPERTY_TYPE_PROPERTY = "Property"
 PROPERTY_TYPE_ARRAY = "Array"
 
+from statemachine import StateMachine, State
 
 class MessageProperty(MessagePropertyInterface):
     """Base class for MessageProperty that provides the core functionality of
     running validations, managing properties, triggering errors and some common
     validation checks.
     """
+
+    class MessagePropertyStateMachine(StateMachine):
+        "State machine for MessageProperty"
+        state_pending = State("Pending", initial=True)
+        state_setup = State("Setup")
+
+        transition_setup = state_pending.to(state_setup)
+
 
     def __init__(self, input: Any):
         """Constructor that receives a MessageProperty instance and initializes this
@@ -30,12 +40,15 @@ class MessageProperty(MessagePropertyInterface):
         self._input = input
         self._errors: List[ErrorCode] = []
         self._properties: Dict[str, Any] = {}
+        self._state = MessageProperty.MessagePropertyStateMachine()
         self.property_name = None
         self.property_source = None
         self.property_position = None
+        self.schema_versioning = None
         self.property_type = PROPERTY_TYPE_PROPERTY
 
     def validate(self) -> bool:
+        self.setup()
         return self._validation_status
 
     @cached_property
@@ -49,13 +62,16 @@ class MessageProperty(MessagePropertyInterface):
 
     def properties(self, key: str) -> Any:
         """Returns the property stored for the key provided"""
+        self.setup()
+        self._properties[key].setup()
         return self._properties[key]
 
     def has_property(self, key):
         """Returns a boolean indicating if the property exists for the key provided"""
+        self.setup()
         return key in self._properties
 
-    def _add_property_instance(self, property_name: str, instance: MessagePropertyInterface) -> None:
+    def _setup_property_instance(self, property_name: str, instance: MessagePropertyInterface) -> None:
         """Given a property name and an instance of MessageProperty, it configures this instance as
         the value for the property.
         Parameters:
@@ -66,7 +82,10 @@ class MessageProperty(MessagePropertyInterface):
         instance.property_source = self
         instance.property_position = None
         instance.property_type = PROPERTY_TYPE_PROPERTY
+        instance.schema_versioning = self.schema_versioning
         self._properties[property_name] = instance
+        
+        instance.setup()
 
     def _property_name_for_list_instance(self, property_name: str, pos: int) -> str:
         """Returns the name of the property including the position for an instance inside a property
@@ -79,7 +98,7 @@ class MessageProperty(MessagePropertyInterface):
         """
         return f"{property_name}[{pos}]"
 
-    def _add_property_list(self, property_name: str, input: List[MessagePropertyInterface]) -> None:
+    def _setup_property_list(self, property_name: str, input: List[MessagePropertyInterface]) -> None:
         """Given a property name and a list of message properties, it stores this list of MessageProperty
         as the value of the property and includes the position in each of them.
         Parameters:
@@ -94,11 +113,15 @@ class MessageProperty(MessagePropertyInterface):
             instance.property_name = self._property_name_for_list_instance(property_name, pos)
             instance.property_source = self
             instance.property_position = pos
+            instance.schema_versioning = self.schema_versioning
             instance.property_type = PROPERTY_TYPE_ARRAY
             self._properties[property_name].append(instance)
+            
+            instance.setup()
 
     def add_property(
-        self, property_name: str, input: Union[MessagePropertyInterface, List[MessagePropertyInterface]]
+        self, property_name: str, input: Union[MessagePropertyInterface, List[MessagePropertyInterface]], 
+        schema_versioning: SchemaVersioning = None
     ) -> None:
         """Given an property name and an input it adds the input as the value of the property
         Parameters:
@@ -108,10 +131,24 @@ class MessageProperty(MessagePropertyInterface):
         Returns:
         None
         """
+
+        self._properties[property_name] = {
+            "property": input,
+            "versioning": schema_versioning
+        }
+
+    def setup_property(self, property_name: str, 
+        input: Union[MessagePropertyInterface, List[MessagePropertyInterface]], 
+        property_schema_versioning: SchemaVersioning = None
+    ):
+        if property_schema_versioning is not None and self.schema_versioning is not None:
+            if not self.schema_versioning.supports(property_schema_versioning):
+                return
         if isinstance(input, list):
-            self._add_property_list(property_name, input)
+            self._setup_property_list(property_name, input)
         else:
-            self._add_property_instance(property_name, input)
+            self._setup_property_instance(property_name, input)
+
 
     @property
     def property_name(self) -> Optional[str]:
@@ -155,9 +192,20 @@ class MessageProperty(MessagePropertyInterface):
         """Sets the property type for this property."""
         self._property_type = value
 
+    @property
+    def schema_versioning(self) -> Any:
+        """Returns the schema versioning in use for this property (the schema that we use for validation)"""
+        return self._schema_versioning
+
+    @schema_versioning.setter
+    def schema_versioning(self, value: MessagePropertyInterface) -> None:
+        """Sets the schema version for this property"""
+        self._schema_versioning = value
+
     @cached_property
     def value(self) -> Any:
         """Returns the value representing this property."""
+        self.setup()
         return self._input.value
 
     @property
@@ -188,6 +236,7 @@ class MessageProperty(MessagePropertyInterface):
         """Calls the method add_to_feedback_message in all the properties defined inside this property
         (if there are any).
         """
+        self.setup()
         logger.debug("MessageProperty::add_to_feedback_message")
         for property in self._properties_instances:
             property.add_to_feedback_message(feedback_message)
@@ -196,6 +245,7 @@ class MessageProperty(MessagePropertyInterface):
         """Calls the method add_to_traction_message in all the properties defined inside this property
         (if there are any).
         """
+        self.setup()
         for property in self._properties_instances:
             property.add_to_traction_message(traction_message)
 
@@ -370,3 +420,25 @@ class MessageProperty(MessagePropertyInterface):
             else:
                 prop_list.append(property)
         return prop_list
+
+    @cached_property
+    def property_definitions(self):
+        return {}
+
+
+    def _find_root_property_source(self):
+        pass
+
+    def setup(self):
+        if self._state.state_pending.is_active:
+            self._state.transition_setup()
+
+            if self._input and isinstance(self._input, MessageProperty):
+                self._input.setup()
+
+            for prop_name in self.property_definitions.keys():
+                self.setup_property(
+                    prop_name, 
+                    self.property_definitions[prop_name]['property'],
+                    (self.property_definitions[prop_name]['versioning'] if 'versioning' in self.property_definitions[prop_name] else None)
+                )

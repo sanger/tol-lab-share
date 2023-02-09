@@ -28,7 +28,7 @@ def encoder_config_for(encoder_type_selection):
         return {"encoder_class": AvroEncoderBinary, "encoder_type": RABBITMQ_HEADER_VALUE_ENCODER_TYPE_BINARY}
 
 
-def send_message(msg, subject, registry, publisher):
+def send_message(msg, subject, registry, publisher, version="latest"):
     print(f"Want to send { subject } message { msg }\n")
 
     encoder_selected = INPUT_ENCODER
@@ -39,7 +39,8 @@ def send_message(msg, subject, registry, publisher):
     if encoder_type == RABBITMQ_HEADER_VALUE_ENCODER_TYPE_BINARY:
         encoder.set_compression_codec("snappy")
 
-    encoded_message = encoder.encode([msg], version="latest")
+    #encoded_message = encoder.encode([msg], version="latest")
+    encoded_message = encoder.encode([msg], version)
 
     print(f"Publishing message { encoded_message }\n")
 
@@ -62,7 +63,7 @@ if __name__ == "__main__":
     registry = SchemaRegistry(REDPANDA_URL, REDPANDA_API_KEY, verify=False)
 
     rabbitmq_details = RabbitServerDetails(
-        uses_ssl=True,
+        uses_ssl=False,
         host=RABBITMQ_HOST,
         port=RABBITMQ_PORT,
         username=RABBITMQ_USERNAME,
@@ -77,6 +78,6 @@ if __name__ == "__main__":
         sample_msg = build_create_labware_96_msg(args.unique_id, pos)
         update_msg = build_update_labware_msg(sample_msg)
         tube_msg = build_create_tube_msg(args.unique_id, pos)
-        send_message(sample_msg, "create-labware", registry, publisher)
+        send_message(sample_msg, "create-labware", registry, publisher, "2")
         send_message(update_msg, "update-labware", registry, publisher)
         send_message(tube_msg, "create-labware", registry, publisher)

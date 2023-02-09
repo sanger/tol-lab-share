@@ -13,6 +13,7 @@ class Input(MessageProperty):
 
     @cached_property
     def value(self):
+        self.setup()
         return self._input
 
     @property

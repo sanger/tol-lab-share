@@ -40,3 +40,12 @@ def test_valid_locations():
     assert len(instance.valid_locations()) == 96
     assert instance.valid_locations()[95] == "H12"
     assert instance.valid_locations()[1] == "B01"
+
+
+def test_value():
+    instance = LabwareType(Input("Tube"))
+    assert instance.value == 'Tube'
+    assert instance.validate()
+    instance = LabwareType(Input(None))
+    assert instance.value is None  
+    assert not instance.validate()

@@ -39,6 +39,8 @@ def build_create_labware_96_msg(unique_id, num_msg):
                     "donorId": f"donor-{unique_id_lab}-{unique_pos(letter, pos)}",
                     "libraryType": LIBRARY_TYPE,
                     "countryOfOrigin": "United Kingdom",
+                    "genomeSize": "1234",
+                    "accessionNumber": "EE1234",
                     "sampleCollectionDateUtc": datetime.now().timestamp() * 1000,
                 }
                 for letter in range(ord("A"), ord("H") + 1)
@@ -71,6 +73,8 @@ def build_create_tube_msg(unique_id, num_msg):
                     "donorId": f"donor-{unique_id_lab}",
                     "libraryType": LIBRARY_TYPE,
                     "countryOfOrigin": "United Kingdom",
+                    "genomeSize": "1234",
+                    "accessionNumber": "EE1234",
                     "sampleCollectionDateUtc": datetime.now().timestamp() * 1000,
                 }
             ],

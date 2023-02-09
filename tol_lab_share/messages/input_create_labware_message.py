@@ -10,7 +10,8 @@ from tol_lab_share.message_properties.definitions.date_utc import DateUtc
 from tol_lab_share.message_properties.definitions.message_property import MessageProperty
 from tol_lab_share.message_properties.definitions.dict_input import DictInput
 from tol_lab_share.messages.interfaces import OutputFeedbackMessageInterface
-
+from tol_lab_share.schema_versioning import SchemaVersioning
+from functools import cached_property
 import logging
 
 logger = logging.getLogger(__name__)
@@ -26,14 +27,25 @@ class InputCreateLabwareMessage(MessageProperty):
         """
         super().__init__(m)
         self._message = m.message
-
-        self.add_property(
-            "message_uuid", MessageUuid(DictInput(self._message, INPUT_CREATE_LABWARE_MESSAGE_MESSAGE_UUID))
-        )
-        self.add_property("labware", Labware(DictInput(self._message, INPUT_CREATE_LABWARE_MESSAGE_LABWARE)))
-        self.add_property(
-            "create_date_utc", DateUtc(DictInput(self._message, INPUT_CREATE_LABWARE_MESSAGE_CREATED_DATE_UTC))
-        )
+        self.schema_versioning = SchemaVersioning(m.subject, m.schema_version)
+        self.setup_properties()
+    
+    @cached_property
+    def property_definitions(self):
+        return [
+            {
+                "name": "message_uuid",
+                "property": MessageUuid(DictInput(self._message, INPUT_CREATE_LABWARE_MESSAGE_MESSAGE_UUID)),
+            },
+            {
+                "name": "labware",
+                "property": Labware(DictInput(self._message, INPUT_CREATE_LABWARE_MESSAGE_LABWARE)),
+            },
+            {
+                "name": "create_date_utc",
+                "property": DateUtc(DictInput(self._message, INPUT_CREATE_LABWARE_MESSAGE_CREATED_DATE_UTC)),
+            }
+        ]
 
     def add_to_feedback_message(self, feedback_message: OutputFeedbackMessageInterface) -> None:
         """Given a feedback message, it adds all errors from this message into it. If there are
