@@ -42,7 +42,7 @@ RABBITMQ_SERVERS = [
         consumed_queue="tls.volume-tracking",
         message_subjects={
             RABBITMQ_SUBJECT_CREATE_ALIQUOT_IN_MLWH: MessageSubjectConfig(
-                processor=CreateAliquotProcessor, reader_schema_version="1"
+                processor=CreateAliquotProcessor, reader_schema_version="2"
             ),
         },
         publisher_details=MLWH_RABBIT_SERVER,
