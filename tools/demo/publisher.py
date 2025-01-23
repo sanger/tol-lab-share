@@ -33,7 +33,7 @@ def encoder_config_for(encoder_type_selection):
 
 
 def send_message(msg, subject, encoder, registry, publisher):
-    print(f"Want to send { subject } message { msg }\n")
+    print(f"Want to send {subject} message {msg}\n")
 
     encoder_class = encoder_config_for(encoder)["encoder_class"]
     encoder_type = encoder_config_for(encoder)["encoder_type"]
@@ -42,7 +42,7 @@ def send_message(msg, subject, encoder, registry, publisher):
 
     encoded_message = encoder.encode([msg], version="1")
 
-    print(f"Publishing message { encoded_message }\n")
+    print(f"Publishing message {encoded_message}\n")
 
     publisher.publish_message(
         RABBITMQ_EXCHANGE,

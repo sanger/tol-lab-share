@@ -54,7 +54,7 @@ class UpdateLabwareProcessor(BaseProcessor):
 
         encoded_message = self._encoder.encode([message])
 
-        logger.debug(f"Sending: { encoded_message }")
+        logger.debug(f"Sending: {encoded_message}")
 
         self._basic_publisher.publish_message(
             "psd.tol",

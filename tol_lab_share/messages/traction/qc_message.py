@@ -188,7 +188,7 @@ class TractionQcMessage(MessageProperty):
             error_str (str): contents received by Traction endpoint on the request
         """
         self.trigger_error(
-            error_codes.ERROR_27_TRACTION_QC_REQUEST_FAILED, text=f"HTTP CODE: { status_code }, MSG: {error_str}"
+            error_codes.ERROR_27_TRACTION_QC_REQUEST_FAILED, text=f"HTTP CODE: {status_code}, MSG: {error_str}"
         )
 
     def raise_submission_error(self, cause: Exception | None = None) -> None:
