@@ -337,7 +337,7 @@ class TractionReceptionMessage(MessageProperty):
             error_str (str): Error message received from the Traction endpoint.
         """
         self.trigger_error(
-            error_codes.ERROR_13_TRACTION_REQUEST_FAILED, text=f"HTTP CODE: { status_code }, MSG: {error_str}"
+            error_codes.ERROR_13_TRACTION_REQUEST_FAILED, text=f"HTTP CODE: {status_code}, MSG: {error_str}"
         )
 
     def raise_submission_error(self, cause: Exception | None = None) -> None:

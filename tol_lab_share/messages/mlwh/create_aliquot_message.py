@@ -112,7 +112,7 @@ class CreateAliquotInWarehouseMessage(MessageProperty):
         """
         message = self.to_string()
         routing_key = self._prepare_routing_key()
-        logger.info(f"Sending json to the warehouse queue: { message }")
+        logger.info(f"Sending json to the warehouse queue: {message}")
         publisher.publish_message(
             exchange,
             routing_key,

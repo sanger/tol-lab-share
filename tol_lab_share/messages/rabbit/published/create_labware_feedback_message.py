@@ -77,7 +77,7 @@ class CreateLabwareFeedbackMessage(MessageProperty):
             self.trigger_error(error_codes.ERROR_22_CANNOT_ENCODE_FEEDBACK_MESSAGE, text=str(e))
             return
 
-        logger.info(f"Sending json: { message }")
+        logger.info(f"Sending json: {message}")
 
         publisher.publish_message(
             exchange,
