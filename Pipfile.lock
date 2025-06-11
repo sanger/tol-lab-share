@@ -730,12 +730,12 @@
         },
         "types-requests": {
             "hashes": [
-                "sha256:09c8b63c11318cb2460813871aaa48b671002e59fda67ca909e9883777787581",
-                "sha256:f8eba93b3a892beee32643ff836993f15a785816acca21ea0ffa006f05ef0fb2"
+                "sha256:741c8777ed6425830bf51e54d6abe245f79b4dcb9019f1622b773463946bf826",
+                "sha256:ad2fe5d3b0cb3c2c902c8815a70e7fb2302c4b8c1f77bdcd738192cdb3878072"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.9'",
-            "version": "==2.32.0.20250515"
+            "version": "==2.32.4.20250611"
         },
         "urllib3": {
             "hashes": [
