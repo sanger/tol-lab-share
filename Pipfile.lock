@@ -1544,10 +1544,10 @@
         },
         "sphinx-pdj-theme": {
             "hashes": [
-                "sha256:376fa8ee574ce49fe85c31eda2da581d44af92b676234ba5eed3d3cd049931b2"
+                "sha256:2fa092087aceab4015f583ef02812a586dd46f45923c71f7f361ecd3b9554e3f"
             ],
             "index": "pypi",
-            "version": "==0.5.0"
+            "version": "==0.6.0"
         },
         "sphinx-rtd-theme": {
             "hashes": [
