@@ -17,6 +17,7 @@ updates:
       - "Technical Debt"
       - "python"
     target-branch: "main"
+
   - package-ecosystem: pip
     directory: "/"
     schedule:
@@ -25,9 +26,8 @@ updates:
       timezone: Europe/London
     labels:
       - "Security Updates"
-      - "Technical Debt"
+      - "security"
       - "python"
-    allow:
-      - dependency-type: "direct"
-    security-updates-only: true
     target-branch: "security-updates"
+    ignore:
+      - dependency-type: "all"
