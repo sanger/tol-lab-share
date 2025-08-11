@@ -16,7 +16,8 @@ updates:
       - "dependencies"
       - "Technical Debt"
       - "python"
-  - package-ecosystem: "pip"
+    target-branch: "main"
+  - package-ecosystem: pip
     directory: "/"
     schedule:
       interval: daily
@@ -28,5 +29,5 @@ updates:
       - "python"
     allow:
       - dependency-type: "direct"
-    # Only security updates
     security-updates-only: true
+    target-branch: "security-updates"
