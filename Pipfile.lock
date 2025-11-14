@@ -1686,12 +1686,12 @@
         },
         "sphinx-autodoc-typehints": {
             "hashes": [
-                "sha256:107ac98bc8b4837202c88c0736d59d6da44076e65a0d7d7d543a78631f662a9b",
-                "sha256:884b39be23b1d884dcc825d4680c9c6357a476936e3b381a67ae80091984eb49"
+                "sha256:0accd043619f53c86705958e323b419e41667917045ac9215d7be1b493648d8c",
+                "sha256:5fcd4a3eb7aa89424c1e2e32bedca66edc38367569c9169a80f4b3e934171fdb"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.11'",
-            "version": "==3.2.0"
+            "version": "==3.5.2"
         },
         "sphinx-basic-ng": {
             "hashes": [
