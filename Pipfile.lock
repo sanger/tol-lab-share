@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a1362744a5f265909e077da504b104dfee690fdcc079e840bd486185f41680ea"
+            "sha256": "7047c180eae7d62052007816dac8cb76ea297cf84210b28e23fd7cadf9f9e2c0"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -228,12 +228,12 @@
         },
         "colorlog": {
             "hashes": [
-                "sha256:5906e71acd67cb07a71e779c47c4bcb45fb8c2993eebe9e5adcd6a6f1b283eff",
-                "sha256:bfba54a1b93b94f54e1f4fe48395725a3d92fd2a4af702f6bd70946bdc0c6ac2"
+                "sha256:2d7e8348291948af66122cff006c9f8da6255d224e7cf8e37d8de2df3bad8c9c",
+                "sha256:eb4ae5cb65fe7fec7773c2306061a8e63e02efc2c72eba9d27b0fa23c94f1321"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.6'",
-            "version": "==6.9.0"
+            "version": "==6.10.1"
         },
         "cramjam": {
             "hashes": [
