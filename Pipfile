@@ -28,7 +28,7 @@ sphinx-pdj-theme = "*"
 [packages]
 colorlog = "~=6.9"
 more-itertools = "~=10.8"
-python-dotenv = "~=1.1"
+python-dotenv = "~=1.2"
 requests = "~=2.32"
 slackclient = "~=2.9"
 lab-share-lib = {editable = false,git = 'https://github.com/sanger/lab-share-lib.git',ref = 'v1.2.0'}
