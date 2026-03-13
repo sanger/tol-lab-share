@@ -7,9 +7,7 @@ from tol_lab_share.constants.input_bioscan_pool_xp_to_traction_message import (
     SAMPLE,
 )
 
-from tol_lab_share.constants import (
-    OUTPUT_BIOSCAN_TRACTION_MESSAGE_SOURCE
-)
+from tol_lab_share.constants import OUTPUT_BIOSCAN_TRACTION_MESSAGE_SOURCE
 from tol_lab_share.messages.consumed.record import Record
 from .library import Library
 from .request import Request
@@ -59,9 +57,7 @@ class Root(Record):
         """Gets the sample record."""
         return Sample(self._payload[SAMPLE], SAMPLE, self._path)
 
-
     @property
     def source(self) -> str:
         """Indicates this is a BioScan sample."""
         return OUTPUT_BIOSCAN_TRACTION_MESSAGE_SOURCE
-

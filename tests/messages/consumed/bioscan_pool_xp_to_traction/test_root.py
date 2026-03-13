@@ -14,9 +14,8 @@ from tol_lab_share.constants.input_bioscan_pool_xp_to_traction_message import (
     SAMPLE,
 )
 from tol_lab_share.messages.consumed.bioscan_pool_xp_to_traction.root import Root
-from tol_lab_share.constants import (
-    OUTPUT_BIOSCAN_TRACTION_MESSAGE_SOURCE
-)
+from tol_lab_share.constants import OUTPUT_BIOSCAN_TRACTION_MESSAGE_SOURCE
+
 
 @pytest.fixture
 def subject():

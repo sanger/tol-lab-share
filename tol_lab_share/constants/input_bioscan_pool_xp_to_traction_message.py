@@ -19,4 +19,3 @@ REQUEST_STUDY_UUID = "studyUuid"
 SAMPLE_SAMPLE_NAME = "sampleName"
 SAMPLE_SAMPLE_UUID = "sampleUuid"
 SAMPLE_SPECIES_NAME = "speciesName"
-
