@@ -4,6 +4,7 @@ TUBE_BARCODE = "tubeBarcode"
 LIBRARY = "library"
 REQUEST = "request"
 SAMPLE = "sample"
+SOURCE = "source"
 
 LIBRARY_VOLUME = "volume"
 LIBRARY_CONCENTRATION = "concentration"
@@ -18,3 +19,4 @@ REQUEST_STUDY_UUID = "studyUuid"
 SAMPLE_SAMPLE_NAME = "sampleName"
 SAMPLE_SAMPLE_UUID = "sampleUuid"
 SAMPLE_SPECIES_NAME = "speciesName"
+

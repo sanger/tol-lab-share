@@ -14,7 +14,9 @@ from tol_lab_share.constants.input_bioscan_pool_xp_to_traction_message import (
     SAMPLE,
 )
 from tol_lab_share.messages.consumed.bioscan_pool_xp_to_traction.root import Root
-
+from tol_lab_share.constants import (
+    OUTPUT_BIOSCAN_TRACTION_MESSAGE_SOURCE
+)
 
 @pytest.fixture
 def subject():
@@ -78,3 +80,6 @@ class TestRoot:
 
         sample.assert_called_once_with(VALID_PAYLOAD[SAMPLE], SAMPLE, "")
         assert field == sample.return_value
+
+    def test_source_returns_bioscan_source(self, subject):
+        assert subject.source == OUTPUT_BIOSCAN_TRACTION_MESSAGE_SOURCE

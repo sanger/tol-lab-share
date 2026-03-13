@@ -15,4 +15,6 @@ RABBITMQ_SUBJECT_UPDATE_LABWARE_FEEDBACK = "update-labware-feedback"
 
 OUTPUT_TRACTION_MESSAGE_SOURCE = "tol-lab-share.tol"
 
+OUTPUT_BIOSCAN_TRACTION_MESSAGE_SOURCE = "tol-lab-share-bioscan.tol"
+
 OUTPUT_TRACTION_MESSAGE_CONTAINER_TYPES = Literal["tubes", "wells"]

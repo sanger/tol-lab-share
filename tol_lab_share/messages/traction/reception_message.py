@@ -49,6 +49,7 @@ class TractionReceptionMessageRequest:
         self.taxon_id: str | None = None
         self.template_prep_kit_box_barcode: str | None = None
         self.retention_instruction: str | None = None
+        self.source: str | None = None
 
     def validate(self) -> bool:
         """Validate the information in this request.
@@ -312,6 +313,10 @@ class TractionReceptionMessage(MessageProperty):
         self.trigger_error(error_codes.ERROR_24_TRACTION_MESSAGE_REQUESTS_HAVE_MISSING_DATA)
         return False
 
+    @property
+    def source(self) -> str:
+        return OUTPUT_TRACTION_MESSAGE_SOURCE
+
     def payload(self) -> dict[str, Any]:
         """Generates the payload to send to Traction.
 
@@ -322,7 +327,7 @@ class TractionReceptionMessage(MessageProperty):
             "data": {
                 "type": "receptions",
                 "attributes": {
-                    "source": OUTPUT_TRACTION_MESSAGE_SOURCE,
+                    "source": self.source,
                     "plates_attributes": self.plates_attributes(),
                     "tubes_attributes": self.tubes_attributes(),
                 },
