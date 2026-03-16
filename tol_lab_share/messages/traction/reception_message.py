@@ -314,7 +314,6 @@ class TractionReceptionMessage(MessageProperty):
         self.trigger_error(error_codes.ERROR_24_TRACTION_MESSAGE_REQUESTS_HAVE_MISSING_DATA)
         return False
 
-
     def payload(self) -> dict[str, Any]:
         """Generates the payload to send to Traction.
 
