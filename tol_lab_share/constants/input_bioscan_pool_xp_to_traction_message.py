@@ -4,7 +4,6 @@ TUBE_BARCODE = "tubeBarcode"
 LIBRARY = "library"
 REQUEST = "request"
 SAMPLE = "sample"
-SOURCE = "source"
 
 LIBRARY_VOLUME = "volume"
 LIBRARY_CONCENTRATION = "concentration"

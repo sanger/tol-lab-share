@@ -49,7 +49,6 @@ class TractionReceptionMessageRequest:
         self.taxon_id: str | None = None
         self.template_prep_kit_box_barcode: str | None = None
         self.retention_instruction: str | None = None
-        self.source: str | None = None
 
     def validate(self) -> bool:
         """Validate the information in this request.
