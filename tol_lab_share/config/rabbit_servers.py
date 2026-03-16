@@ -7,7 +7,7 @@ MLWH_RABBIT_SERVER = RabbitServerDetails(
     port=5672,
     username=os.environ.get("WAREHOUSE_RMQ_USER", "admin"),
     password=os.environ.get("WAREHOUSE_RMQ_PASSWORD", "development"),
-    vhost="test",
+    vhost="mlwh",
 )
 
 RABBIT_SERVER_DETAILS = RabbitServerDetails(

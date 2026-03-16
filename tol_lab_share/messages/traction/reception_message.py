@@ -221,6 +221,7 @@ class TractionReceptionMessage(MessageProperty):
     def __init__(self):
         """Reset initial data."""
         super().__init__(Value(self))
+        self.source = OUTPUT_TRACTION_MESSAGE_SOURCE
         self._requests: list[TractionReceptionMessageRequest] = []
         self._sent = False
         self._validate_certificates = get_config().CERTIFICATES_VALIDATION_ENABLED
@@ -313,9 +314,6 @@ class TractionReceptionMessage(MessageProperty):
         self.trigger_error(error_codes.ERROR_24_TRACTION_MESSAGE_REQUESTS_HAVE_MISSING_DATA)
         return False
 
-    @property
-    def source(self) -> str:
-        return OUTPUT_TRACTION_MESSAGE_SOURCE
 
     def payload(self) -> dict[str, Any]:
         """Generates the payload to send to Traction.
