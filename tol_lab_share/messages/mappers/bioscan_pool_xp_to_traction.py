@@ -31,3 +31,5 @@ class BioscanPoolXpToTractionMapper:
         request.sample_name = source.sample.name.value
         request.sample_uuid = source.sample.uuid.value
         request.species = source.sample.species_name.value
+
+        destination.source = source.source

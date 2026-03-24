@@ -220,6 +220,7 @@ class TractionReceptionMessage(MessageProperty):
     def __init__(self):
         """Reset initial data."""
         super().__init__(Value(self))
+        self.source = OUTPUT_TRACTION_MESSAGE_SOURCE
         self._requests: list[TractionReceptionMessageRequest] = []
         self._sent = False
         self._validate_certificates = get_config().CERTIFICATES_VALIDATION_ENABLED
@@ -322,7 +323,7 @@ class TractionReceptionMessage(MessageProperty):
             "data": {
                 "type": "receptions",
                 "attributes": {
-                    "source": OUTPUT_TRACTION_MESSAGE_SOURCE,
+                    "source": self.source,
                     "plates_attributes": self.plates_attributes(),
                     "tubes_attributes": self.tubes_attributes(),
                 },
