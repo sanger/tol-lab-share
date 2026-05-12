@@ -40,6 +40,8 @@ to run this one as it requires Rabbitmq to have started completely:
     RABBITMQ_PORT=5672
     RABBITMQ_USERNAME=admin
     RABBITMQ_PASSWORD=development
+    TRACTION_API_KEY=traction-development
+    TRACTION_API_KEY_HEADER=X-Traction-Client-Id
     ```
 
 1. Start interactive bash in docker container
