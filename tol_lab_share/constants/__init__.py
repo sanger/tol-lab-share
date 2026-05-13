@@ -1,6 +1,5 @@
 from typing import Literal
 
-
 RABBITMQ_SUBJECT_BIOSCAN_POOL_XP_TO_TRACTION = "bioscan-pool-xp-tube-to-traction"
 RABBITMQ_SUBJECT_CREATE_ALIQUOT_IN_MLWH = "create-aliquot-in-mlwh"
 RABBITMQ_SUBJECT_CREATE_LABWARE = "create-labware"
