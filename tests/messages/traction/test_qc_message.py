@@ -159,9 +159,7 @@ class TestTractionQcMessage:
         assert not valid_traction_qc_message.validate()
         assert len(valid_traction_qc_message.errors) > 0
 
-    def test_sends_api_key_header(
-        self, config, valid_traction_qc_message, traction_qc_success_response
-    ):
+    def test_sends_api_key_header(self, config, valid_traction_qc_message, traction_qc_success_response):
 
         with requests_mock.Mocker() as m:
             m.post(config.TRACTION_QC_URL, json=traction_qc_success_response, status_code=201)

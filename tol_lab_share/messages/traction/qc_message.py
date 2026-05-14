@@ -218,7 +218,11 @@ class TractionQcMessage(MessageProperty):
         Returns:
             bool indicating if the request was successful
         """
-        headers = { "Content-type": "application/vnd.api+json", "Accept": "application/vnd.api+json", self._traction_api_key_header: self._traction_api_key }
+        headers = {
+            "Content-type": "application/vnd.api+json",
+            "Accept": "application/vnd.api+json",
+            self._traction_api_key_header: self._traction_api_key,
+        }
 
         try:
             r = post(url, headers=headers, data=dumps(self.payload(), default=str), verify=self._validate_certificates)

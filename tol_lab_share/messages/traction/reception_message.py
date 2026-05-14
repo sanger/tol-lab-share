@@ -368,7 +368,11 @@ class TractionReceptionMessage(MessageProperty):
         Returns:
             bool: True if the request was sent successfully; otherwise False.
         """
-        headers = { "Content-type": "application/vnd.api+json", "Accept": "application/vnd.api+json", self._traction_api_key_header: self._traction_api_key }
+        headers = {
+            "Content-type": "application/vnd.api+json",
+            "Accept": "application/vnd.api+json",
+            self._traction_api_key_header: self._traction_api_key,
+        }
 
         try:
             r = post(url, headers=headers, data=dumps(self.payload()), verify=self._validate_certificates)
