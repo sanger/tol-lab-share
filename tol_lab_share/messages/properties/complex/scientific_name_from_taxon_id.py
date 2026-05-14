@@ -9,6 +9,7 @@ from typing import Callable
 
 class StatusCodeException(Exception):
     def __init__(self, status_code: int):
+        super().__init__(status_code)
         self.status_code = status_code
 
 
