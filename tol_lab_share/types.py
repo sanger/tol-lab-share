@@ -23,10 +23,15 @@ class Config(ModuleType):
     # RedPanda
     REDPANDA_BASE_URI: str
 
+    # Traction
+    TRACTION_URL: str
+    TRACTION_QC_URL: str
+    TRACTION_API_KEY: str
+    TRACTION_API_KEY_HEADER: str
+
     PROCESSORS: dict[str, str]
 
     CERTIFICATES_VALIDATION_ENABLED: bool
-    TRACTION_URL: str
     EBI_TAXONOMY_URL: str
     LOCALHOST: str
     ROOT_PASSWORD: str
