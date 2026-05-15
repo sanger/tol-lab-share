@@ -27,7 +27,7 @@ sphinx-pdj-theme = "*"
 
 [packages]
 colorlog = "~=6.10"
-more-itertools = "~=10.8"
+more-itertools = "~=11.0"
 python-dotenv = "~=1.2"
 requests = "~=2.32"
 slackclient = "~=2.9"
