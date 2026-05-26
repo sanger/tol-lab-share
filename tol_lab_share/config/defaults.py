@@ -16,8 +16,13 @@ ROOT_PASSWORD = os.environ.get("ROOT_PASSWORD", "")
 ###
 REDPANDA_BASE_URI = f"http://{os.environ.get('LOCALHOST', '127.0.0.1')}:8081"
 
-TRACTION_URL = f"http://{os.environ.get('LOCALHOST', '127.0.0.1:3100')}/v1/receptions"
-TRACTION_QC_URL = f"http://{os.environ.get('LOCALHOST', '127.0.0.1:3100')}/v1/qc_receptions"
+###
+# Traction details
+###
+TRACTION_URL = f"http://{os.environ.get('TRACTION_URL', '127.0.0.1:3100')}/v1/receptions"
+TRACTION_QC_URL = f"http://{os.environ.get('TRACTION_URL', '127.0.0.1:3100')}/v1/qc_receptions"
+TRACTION_API_KEY = os.environ.get("TRACTION_API_KEY", "traction-development")
+TRACTION_API_KEY_HEADER = os.environ.get("TRACTION_API_KEY_HEADER", "X-Traction-Client-Id")
 
 EBI_TAXONOMY_URL = "https://www.ebi.ac.uk/ena/taxonomy/rest/tax-id"
 
