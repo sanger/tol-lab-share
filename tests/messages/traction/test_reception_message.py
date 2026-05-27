@@ -926,6 +926,15 @@ class TestTractionReceptionMessage:
         assert len(feedback.errors) == 0
         assert feedback.operation_was_error_free
 
+    def test_sends_api_key_header(self, config, traction_success_creation_response):
+        vt = valid_traction_message()
+
+        with requests_mock.Mocker() as m:
+            m.post(config.TRACTION_URL, json=traction_success_creation_response, status_code=201)
+            vt.send(config.TRACTION_URL)
+
+            assert m.last_request.headers.get("X-Traction-Client-Id") == "traction-development"
+
     def test_can_add_to_message_property_when_errors(self, valid_feedback_message):
         instance = TractionReceptionMessage()
 
