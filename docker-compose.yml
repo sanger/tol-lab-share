@@ -1,7 +1,6 @@
 #
 # Basic version of stack, for Github
 #
-version: "3.3"
 services:
   tol-lab-share:
     build: .
@@ -22,21 +21,22 @@ services:
   #   docker network create redpanda-network
   #   docker volume create redpanda-volume
   #   docker run --name=schema_registry --net=redpanda-network -v "redpanda-volume:/var/lib/redpanda/data" -p 8081:8081 \
-  #     docker.vectorized.io/vectorized/redpanda start --overprovisioned --smp 1 --memory 250M
+  #      docker.redpanda.com/redpandadata/redpanda:latest redpanda start --mode dev-container --smp 1 --memory 500M
   schema_registry:
-    image: docker.vectorized.io/vectorized/redpanda
+    command:
+      - redpanda
+      - start
+      - --mode dev-container
+      # Tells Seastar (the framework Redpanda uses under the hood) to use 1 core on the system.
+      - --smp 1
+      - --memory 500M
+    image: docker.redpanda.com/redpandadata/redpanda:${REDPANDA_VERSION:-latest}
+    volumes:
+      - redpanda-volume:/var/lib/redpanda/data
     networks:
       - redpanda-network
     ports:
-      - "8081:8081"
-    volumes:
-      - redpanda-volume:/var/lib/redpanda/data
-    #mem_limit: 250m
-    command:
-      - start
-      - --overprovisioned
-      - --smp 1
-      - --memory 250M
+      - 8081:8081
 
   rabbitmq:
     image: rabbitmq:3-management
